@@ -17,12 +17,11 @@ public class EnergyManager {
     public static void addEnergy(Player player, double amount) {
         double currentEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getCurrentEnergy();
         double maxEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getMaxEnergy();
-
-        if ((amount + currentEnergy) > maxEnergy) {
-            amount = maxEnergy - currentEnergy;
-        }
-
         double edited = currentEnergy + amount;
+
+        if (edited > maxEnergy) {
+            edited = maxEnergy;
+        }
 
         profileManager.getPlayerProfile(player.getUniqueId()).getStats().setCurrentEnergy(edited);
         updateEnergyBar(player);
@@ -36,9 +35,13 @@ public class EnergyManager {
             amount = maxEnergy;
         }
 
-        double edited = currentEnergy - amount;
+        double subtracted = currentEnergy - amount;
 
-        profileManager.getPlayerProfile(player.getUniqueId()).getStats().setCurrentEnergy(edited);
+        if (subtracted < 0) {
+            subtracted = 0;
+        }
+
+        profileManager.getPlayerProfile(player.getUniqueId()).getStats().setCurrentEnergy(subtracted);
         updateEnergyBar(player);
     }
 
