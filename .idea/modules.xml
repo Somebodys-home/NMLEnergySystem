@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NMLEnergySystem.iml" filepath="$PROJECT_DIR$/NMLEnergySystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NMLEnergySystem.iml" filepath="$PROJECT_DIR$/.idea/NMLEnergySystem.iml" />
     </modules>
   </component>
 </project>

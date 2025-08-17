@@ -1,6 +1,7 @@
 package io.github.NoOne.nMLEnergySystem;
 
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.statSystem.ResetStatsEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,11 +39,18 @@ public class EnergyListener implements Listener {
         var stats = nmlPlayerStats.getProfileManager().getPlayerProfile(player.getUniqueId()).getStats();
 
         if (player.isSprinting()) {
-            EnergyManager.useEnergy(player, stats.getMaxEnergy() / 400);
+            EnergyManager.useEnergy(player, stats.getMaxEnergy() / 600);
 
             if (player.getFoodLevel() < 6 && stats.getCurrentEnergy() > 0) {
                 player.setSprinting(true);
             }
         }
+    }
+
+    @EventHandler
+    public void resetEnergy(ResetStatsEvent event) {
+        Player player = event.getPlayer();
+
+        player.setFoodLevel(20);
     }
 }
