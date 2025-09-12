@@ -1,7 +1,7 @@
 name: NMLEnergySystem
 version: '1.0-SNAPSHOT'
 main: io.github.NoOne.nMLEnergySystem.NMLEnergySystem
-api-version: '1.21'
+api-version: '1.21.8'
 authors: [ Gabriel Nicolas ]
 depend:
   - NMLPlayerStats
