@@ -28,6 +28,7 @@ public final class NMLEnergySystem extends JavaPlugin {
 
         energyManager = new EnergyManager(this);
         energyManager.energyRegenServerTask();
+        energyManager.pauseEnergyRegenServerTask();
 
         getServer().getPluginManager().registerEvents(new EnergyListener(nmlPlayerStats), this);
     }
