@@ -69,11 +69,11 @@ public class EnergyManager {
         updateEnergyBar(player);
     }
 
-    public static void pauseRegen(Player player) {
+    public static void pauseEnergyRegen(Player player) {
         ongoingEnergyPauses.put(player.getUniqueId(), Integer.MAX_VALUE);
     }
 
-    public static void resumeRegen(Player player) {
+    public static void resumeEnergyRegen(Player player) {
         ongoingEnergyPauses.put(player.getUniqueId(), 0);
     }
 
