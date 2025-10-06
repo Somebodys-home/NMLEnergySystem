@@ -52,6 +52,10 @@ public class EnergyManager {
         player.setMetadata("pause energy regen", new FixedMetadataValue(nmlEnergySystem, true));
     }
 
+    public static void resumeEnergyRegen(Player player) {
+        player.removeMetadata("pause energy regen", nmlEnergySystem);
+    }
+
     public static void updateEnergyBar(Player player) {
         double currentEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getCurrentEnergy();
         double maxEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getMaxEnergy();
