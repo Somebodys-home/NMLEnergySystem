@@ -13,6 +13,7 @@ import java.util.*;
 public class EnergyManager {
     private static NMLEnergySystem nmlEnergySystem;
     private static ProfileManager profileManager;
+    private static final HashMap<UUID, Integer> ongoingEnergyPauses = new HashMap<>();
 
     public EnergyManager(NMLEnergySystem nmlEnergySystem) {
         EnergyManager.nmlEnergySystem = nmlEnergySystem;
@@ -25,7 +26,7 @@ public class EnergyManager {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     UUID uuid = player.getUniqueId();
 
-                    if (player.isSprinting() || player.hasMetadata("pause energy regen")) continue;
+                    if (player.isSprinting() || ongoingEnergyPauses.containsKey(uuid)) continue;
 
                     double currentEnergy = profileManager.getPlayerProfile(uuid).getStats().getCurrentEnergy();
                     double maxEnergy = profileManager.getPlayerProfile(uuid).getStats().getMaxEnergy();
@@ -38,6 +39,26 @@ public class EnergyManager {
         }.runTaskTimer(nmlEnergySystem, 0, 20);
     }
 
+    public void pauseEnergyRegenServerTask() {
+        new BukkitRunnable() {
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    UUID uuid = player.getUniqueId();
+
+                    if (ongoingEnergyPauses.containsKey(uuid)) {
+                        int pauseTimer = ongoingEnergyPauses.get(uuid);
+
+                        if (pauseTimer <= 0) {
+                            ongoingEnergyPauses.remove(uuid);
+                        } else {
+                            ongoingEnergyPauses.put(uuid, pauseTimer - 1);
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(nmlEnergySystem, 0, 1);
+    }
+
     public static void addEnergy(Player player, double amount) {
         profileManager.getPlayerProfile(player.getUniqueId()).getStats().add2Stat("currentenergy", amount);
         updateEnergyBar(player);
@@ -48,12 +69,12 @@ public class EnergyManager {
         updateEnergyBar(player);
     }
 
-    public static void pauseEnergyRegen(Player player) {
-        player.setMetadata("pause energy regen", new FixedMetadataValue(nmlEnergySystem, true));
+    public static void pauseRegen(Player player) {
+        ongoingEnergyPauses.put(player.getUniqueId(), 9999999);
     }
 
-    public static void resumeEnergyRegen(Player player) {
-        player.removeMetadata("pause energy regen", nmlEnergySystem);
+    public static void resumeRegen(Player player) {
+        ongoingEnergyPauses.put(player.getUniqueId(), 0);
     }
 
     public static void updateEnergyBar(Player player) {
