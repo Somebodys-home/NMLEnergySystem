@@ -70,7 +70,7 @@ public class EnergyManager {
     }
 
     public static void pauseRegen(Player player) {
-        ongoingEnergyPauses.put(player.getUniqueId(), 9999999);
+        ongoingEnergyPauses.put(player.getUniqueId(), Integer.MAX_VALUE);
     }
 
     public static void resumeRegen(Player player) {
