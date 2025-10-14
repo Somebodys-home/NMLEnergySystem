@@ -2,6 +2,7 @@ package io.github.NoOne.nMLEnergySystem;
 
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import io.github.NoOne.nMLPlayerStats.statSystem.ResetStatsEvent;
+import io.github.NoOne.nMLPlayerStats.statSystem.StatChangeEvent;
 import io.github.NoOne.nMLPlayerStats.statSystem.Stats;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

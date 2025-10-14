@@ -1,6 +1,7 @@
 package io.github.NoOne.nMLEnergySystem;
 
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLPlayerStats.statSystem.StatChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -60,12 +61,12 @@ public class EnergyManager {
     }
 
     public static void addEnergy(Player player, double amount) {
-        profileManager.getPlayerProfile(player.getUniqueId()).getStats().add2Stat("currentenergy", amount);
+        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", amount));
         updateEnergyBar(player);
     }
 
     public static void useEnergy(Player player, double amount) {
-        profileManager.getPlayerProfile(player.getUniqueId()).getStats().removeFromStat("currentenergy", amount);
+        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", -amount));
         updateEnergyBar(player);
     }
 
