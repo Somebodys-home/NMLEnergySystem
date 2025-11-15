@@ -1,8 +1,6 @@
 name: NMLEnergySystem
-version: '1.0-SNAPSHOT'
+version: '1.0'
 main: io.github.NoOne.nMLEnergySystem.NMLEnergySystem
-api-version: '1.21.8'
-authors: [ Gabriel Nicolas ]
+api-version: '1.21'
 depend:
   - NMLPlayerStats
-description: Plugin for No Man's Land to manage the player's energy

@@ -6,7 +6,7 @@
 
     <groupId>io.github.NoOne</groupId>
     <artifactId>NMLEnergySystem</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>NMLEnergySystem</name>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>NMLPlayerStats</artifactId>
-            <version>387ac25643</version>
+            <version>566f9983eb</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
