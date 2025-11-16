@@ -29,8 +29,8 @@ public class EnergyManager {
 
                     if (player.isSprinting() || ongoingEnergyPauses.containsKey(uuid)) continue;
 
-                    double currentEnergy = profileManager.getPlayerStats(uuid).getCurrentEnergy();
-                    double maxEnergy = profileManager.getPlayerStats(uuid).getMaxEnergy();
+                    double currentEnergy = profileManager.getPlayerProfile(uuid).getStats().getCurrentEnergy();
+                    double maxEnergy = profileManager.getPlayerProfile(uuid).getStats().getMaxEnergy();
 
                     if (currentEnergy < maxEnergy) {
                         addEnergy(player, (maxEnergy / 15)); // how long in seconds it takes to regen to full energy
@@ -79,8 +79,8 @@ public class EnergyManager {
     }
 
     public static void updateEnergyBar(Player player) {
-        double currentEnergy = profileManager.getPlayerStats(player.getUniqueId()).getCurrentEnergy();
-        double maxEnergy = profileManager.getPlayerStats(player.getUniqueId()).getMaxEnergy();
+        double currentEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getCurrentEnergy();
+        double maxEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getMaxEnergy();
         double currentEnergyPercent = currentEnergy / maxEnergy;
 
         if (currentEnergyPercent > 1) {

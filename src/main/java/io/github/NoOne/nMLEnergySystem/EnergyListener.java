@@ -27,7 +27,7 @@ public class EnergyListener implements Listener {
             return;
         }
 
-        Stats stats = profileManager.getPlayerStats(player.getUniqueId());
+        Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
         int foodLevelChange = event.getFoodLevel() - player.getFoodLevel();
         double energyChange = foodLevelChange * (stats.getMaxEnergy() / 20);
 
@@ -38,7 +38,7 @@ public class EnergyListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        Stats stats = profileManager.getPlayerStats(player.getUniqueId());
+        Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
 
         if (player.isSprinting() && !player.isFlying()) {
             EnergyManager.useEnergy(player, stats.getMaxEnergy() / 600);
