@@ -62,12 +62,10 @@ public class EnergyManager {
 
     public static void addEnergy(Player player, double amount) {
         Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", amount));
-        updateEnergyBar(player);
     }
 
     public static void useEnergy(Player player, double amount) {
         Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", -amount));
-        updateEnergyBar(player);
     }
 
     public static void pauseEnergyRegen(Player player) {

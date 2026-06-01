@@ -20,6 +20,21 @@ public class EnergyListener implements Listener {
     }
 
     @EventHandler
+    public void onStatChange(StatChangeEvent event) {
+        Player player = event.getPlayer();
+
+        if (event.getStat().equals("currentenergy")) {
+            EnergyManager.updateEnergyBar(player);
+        } else if (event.getStat().equals("maxenergy")) {
+            Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
+
+            if (stats.getCurrentEnergy() > stats.getMaxEnergy()) {
+                Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", stats.getMaxEnergy() - stats.getCurrentEnergy()));
+            }
+        }
+    }
+
+    @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
         if (player.isSprinting()) {
