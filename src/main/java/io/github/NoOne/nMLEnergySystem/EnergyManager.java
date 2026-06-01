@@ -81,14 +81,8 @@ public class EnergyManager {
     public static void updateEnergyBar(Player player) {
         double currentEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getCurrentEnergy();
         double maxEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getMaxEnergy();
-        double currentEnergyPercent = currentEnergy / maxEnergy;
+        double currentEnergyPercent = Math.min(currentEnergy / maxEnergy, 1);
 
-        if (currentEnergyPercent > 1) {
-            currentEnergyPercent = 1;
-        }
-
-        int hungerLevel = (int) (currentEnergyPercent * 20);  // 20 is the max hunger level
-
-        player.setFoodLevel(hungerLevel);
+        player.setFoodLevel((int) (currentEnergyPercent * 20));
     }
 }
