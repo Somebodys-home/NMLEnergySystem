@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -19,9 +20,14 @@ public class EnergyListener implements Listener {
         this.profileManager = nmlEnergySystem.getProfileManager();
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onStatChange(StatChangeEvent event) {
         Player player = event.getPlayer();
+
+        if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (event.getStat().equals("currentenergy")) {
             EnergyManager.updateEnergyBar(player);
@@ -34,20 +40,20 @@ public class EnergyListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onFoodLevelChange(FoodLevelChangeEvent event) {
-        if (!(event.getEntity() instanceof Player player)) return;
-        if (player.isSprinting()) {
-            event.setCancelled(true);
-            return;
-        }
-
-        Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
-        int foodLevelChange = event.getFoodLevel() - player.getFoodLevel();
-        double energyChange = foodLevelChange * (stats.getMaxEnergy() / 20);
-
-        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", energyChange));
-    }
+//    @EventHandler
+//    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+//        if (!(event.getEntity() instanceof Player player)) return;
+//        if (player.isSprinting()) {
+//            event.setCancelled(true);
+//            return;
+//        }
+//
+//        Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
+//        int foodLevelChange = event.getFoodLevel() - player.getFoodLevel();
+//        double energyChange = foodLevelChange * (stats.getMaxEnergy() / 20);
+//
+//        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", energyChange));
+//    }
 
 
     @EventHandler
@@ -55,7 +61,7 @@ public class EnergyListener implements Listener {
         Player player = event.getPlayer();
         Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
 
-        if (player.isSprinting() && !player.isFlying()) {
+        if (player.isSprinting() && EnergyManager.canHaveEnergyRemoved(player)) {
             EnergyManager.useEnergy(player, stats.getMaxEnergy() / 600);
         }
     }
