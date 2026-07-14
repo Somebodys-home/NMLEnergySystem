@@ -24,11 +24,6 @@ public class EnergyListener implements Listener {
     public void onStatChange(StatChangeEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
-            event.setCancelled(true);
-            return;
-        }
-
         if (event.getStat().equals("currentenergy")) {
             EnergyManager.updateEnergyBar(player);
         } else if (event.getStat().equals("maxenergy")) {
@@ -60,7 +55,7 @@ public class EnergyListener implements Listener {
         Player player = event.getPlayer();
         Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
 
-        if (player.isSprinting() && EnergyManager.canHaveEnergyRemoved(player)) {
+        if (player.isSprinting()) {
             EnergyManager.useEnergy(player, stats.getMaxEnergy() / 600);
         }
     }

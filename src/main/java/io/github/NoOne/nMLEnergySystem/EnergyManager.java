@@ -48,7 +48,9 @@ public class EnergyManager {
 
     // ditto
     public static void useEnergy(Player player, double amount) {
-        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", -amount));
+        if (canHaveEnergyRemoved(player)) {
+            Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", -amount));
+        }
     }
 
     public static void pauseEnergyRegen(Player player) {
