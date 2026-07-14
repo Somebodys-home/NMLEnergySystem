@@ -20,8 +20,8 @@ public class EnergyListener implements Listener {
         this.profileManager = nmlEnergySystem.getProfileManager();
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onStatChange(StatChangeEvent event) {
+    @EventHandler
+    public void onEnergyStatChange(StatChangeEvent event) {
         Player player = event.getPlayer();
 
         if (event.getStat().equals("currentenergy")) {

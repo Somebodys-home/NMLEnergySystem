@@ -23,6 +23,7 @@ public class EnergyManager {
         new BukkitRunnable() {
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
+
                     // energy cannot be added if either their energy regen is paused, or they're sprinting in survival or adv. mode
                     if ((player.isSprinting() && player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) ||
                         ongoingEnergyPauses.contains(player.getUniqueId())) {
@@ -41,12 +42,10 @@ public class EnergyManager {
         }.runTaskTimer(nmlEnergySystem, 0, 20);
     }
 
-    // looks unimportant, but is used by a lot of other plugins, dont mess
     public static void addEnergy(Player player, double amount) {
         Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", amount));
     }
 
-    // ditto
     public static void useEnergy(Player player, double amount) {
         if (canHaveEnergyRemoved(player)) {
             Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", -amount));
@@ -64,9 +63,9 @@ public class EnergyManager {
     public static void updateEnergyBar(Player player) {
         double currentEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getCurrentEnergy();
         double maxEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getMaxEnergy();
-        int currentEnergyPercent = (int) Math.min(Math.round((currentEnergy / maxEnergy) * 20), 20);
+        double currentEnergyPercent = Math.min(currentEnergy / maxEnergy, 1);
 
-        player.setFoodLevel(currentEnergyPercent);
+        player.setFoodLevel((int) (currentEnergyPercent * 20));
     }
 
     public static boolean canHaveEnergyRemoved(Player player) {
