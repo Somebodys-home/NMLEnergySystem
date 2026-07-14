@@ -40,21 +40,20 @@ public class EnergyListener implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void onFoodLevelChange(FoodLevelChangeEvent event) {
-//        if (!(event.getEntity() instanceof Player player)) return;
-//        if (player.isSprinting()) {
-//            event.setCancelled(true);
-//            return;
-//        }
-//
-//        Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
-//        int foodLevelChange = event.getFoodLevel() - player.getFoodLevel();
-//        double energyChange = foodLevelChange * (stats.getMaxEnergy() / 20);
-//
-//        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", energyChange));
-//    }
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        if (player.isSprinting()) {
+            event.setCancelled(true);
+            return;
+        }
 
+        Stats stats = profileManager.getPlayerProfile(player.getUniqueId()).getStats();
+        int foodLevelChange = event.getFoodLevel() - player.getFoodLevel();
+        double energyChange = foodLevelChange * (stats.getMaxEnergy() / 20);
+
+        Bukkit.getPluginManager().callEvent(new StatChangeEvent(player, "currentenergy", energyChange));
+    }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {

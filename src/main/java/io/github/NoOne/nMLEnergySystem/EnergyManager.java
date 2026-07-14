@@ -62,9 +62,9 @@ public class EnergyManager {
     public static void updateEnergyBar(Player player) {
         double currentEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getCurrentEnergy();
         double maxEnergy = profileManager.getPlayerProfile(player.getUniqueId()).getStats().getMaxEnergy();
-        double currentEnergyPercent = Math.min(currentEnergy / maxEnergy, 1);
+        int currentEnergyPercent = (int) Math.min(Math.round((currentEnergy / maxEnergy) * 20), 20);
 
-        player.setFoodLevel((int) (currentEnergyPercent * 20));
+        player.setFoodLevel(currentEnergyPercent);
     }
 
     public static boolean canHaveEnergyRemoved(Player player) {
